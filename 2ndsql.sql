@@ -7,7 +7,7 @@ RETURNS void
 LANGUAGE plpgsql
 AS $function$
 DECLARE 
-    total_rows INTEGER;
+    total_rows INTEGER := 0;
 BEGIN
     -- Bulk update with performance tracking and efficient join
     WITH UpdateData AS (
