@@ -1,5 +1,9 @@
+-- First, drop the existing function
+DROP FUNCTION IF EXISTS dbo."SPU_TPRISPMDBE_1"();
+
+-- Then create the new function
 CREATE OR REPLACE FUNCTION dbo."SPU_TPRISPMDBE_1"()
-RETURNS TABLE (rows_updated INTEGER)
+RETURNS void
 LANGUAGE plpgsql
 AS $function$
 DECLARE 
@@ -24,15 +28,13 @@ BEGIN
         UpdateData ud
     WHERE 
         t."CODBDR" = ud."CODBDR" AND 
-        t."CODLEVEL" = 'LE'
-    RETURNING 1;
+        t."CODLEVEL" = 'LE';
 
     GET DIAGNOSTICS total_rows = ROW_COUNT;
 
-    -- Optional: Add logging or additional processing
+    -- Optional: Add logging
     RAISE NOTICE 'Total rows updated: %', total_rows;
 
-    RETURN QUERY 
-    SELECT total_rows;
+    RETURN;
 END;
 $function$;
